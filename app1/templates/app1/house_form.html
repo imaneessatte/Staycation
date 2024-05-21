@@ -1,0 +1,29 @@
+{% extends 'main.html'%}
+
+{% block content %}
+<style>
+    #id_name,#id_address,#id_country,#id_city,#id_price,#id_beds,#id_baths,#id_description{
+        width: 100%;
+        font-size: 1.6rem;
+        border: transparent;
+        outline: none;
+        padding: .6em;
+        border-radius: 6px;
+        background-color: #333;
+        color: #efefef;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+</style>
+
+
+<div class="form container-md d-flex flex-column justify-content-start py-3 px-3">
+    <p class="text-center  mb-5 pb-3 text-primary alert alert-primary">Please fill all fields to add a new house!!</p>
+    <form method="post" action="" class="house-form row row-cols-sm-2 row-cols-md-2 row-cols-lg-2">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p></p>
+        <input type="submit" value="Submit" class="submit-btn btn btn-primary ">
+    </form>
+</div>
+{% endblock content %}
+

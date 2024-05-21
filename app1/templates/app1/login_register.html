@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<style>
+
+.form{
+    height: 100vh;
+}
+.logform{
+    border-radius: 6px;
+    background-color: #111;
+    border: 2px solid #1F8A70;
+    width: 360px;
+    padding: 2em 1em;
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 7px 29px 0px;
+}
+.logform h1{
+    font-size: 2.6rem;
+}
+.logform p a{
+    font-size: 1.2rem;
+    color: white;
+}
+.logform #submit{
+    background-color: #1F8A70;
+}
+#username,#password,#id_username,#id_password1,#id_password2,#id_role,#role{
+    width:100%;
+    font-size: 1.6rem;
+    border: transparent;
+    outline: none;
+    padding: .5em;
+    border-radius: 5px;
+    background-color: #333;
+    color: #efefef;
+    margin-bottom: 0.6em;
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 7px 29px 0px;
+}
+#username:focus,#password:focus,#id_username:focus,#id_password1:focus,#id_password2:focus{
+    border: 2px solid #1F8A70;
+}
+ul{
+    list-style:none;
+    margin: 0;
+}
+</style>
+
+{% if page == 'login' %}
+<div class="form container-lg d-flex justify-content-center align-items-center py-3 px-3">
+    <form method="post" action="" class="logform row  ">
+        {% csrf_token %}
+        <h1 class="text-center pb-5 text-white">Login</h1>
+        <!-- flash messages -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  class="alert alert-danger text-danger">{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- flash messages -->
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter password" required>
+
+        <!-- <label for="role">Role</label>
+        <select name="role" id="role" required>
+            <option value="Owner">Owner</option>
+            <option value="Client">Client</option>
+        </select> -->
+        
+        <input type="submit" value="Login" class="submit-btn btn mt-3 mb-4 text-white" id="submit">
+
+        <p><a href="{% url 'register' %}" class="text-center">Haven't signed up yet?</a></p>
+    </form>
+</div>
+{%else%}
+<div class="form container-lg d-flex justify-content-center align-items-center py-3 px-3">
+    <form method="post" action="" class="logform row  ">
+        {% csrf_token %}
+        <h1 class="text-center pb-5 text-white">Register</h1>
+        <!-- flash messages -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  class="alert alert-danger text-danger">{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- flash messages -->
+        
+        
+        {% for field in form %}
+        <label for="">{{field.label}}</label>
+        {{field}}
+        {% endfor%}
+        
+        <input type="submit" value="Sign Up" class="submit-btn btn mt-3 mb-4 text-white" id="submit">
+
+        <p><a href="{% url 'login' %}" class="text-center">Already i have account!</a></p>
+    </form>
+</div>
+{%endif%}
+
+{% endblock content %}

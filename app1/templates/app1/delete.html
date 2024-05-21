@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- <form method="post" action="">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{obj}}?</p>
+    <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+    <input type="submit" value="Confirm">
+</form> -->
+<style>
+.form{
+    /* border: 1px solid red; */
+    background-color: #333;
+    border-radius: 6px;
+    overflow: hidden;
+    padding-bottom: 2em;
+}
+.house-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form > p{
+    font-size: 1.5rem;
+    width: 100%;
+}
+.submit-btn{
+    font-size: 1.3rem;
+    padding: 0.5em;
+    align-self: center;
+    border-radius: 4px;
+}
+.btn{
+    font-size: 1.2rem;
+}
+</style>   
+
+<div class="form container-md d-flex flex-column justify-content-start py-3 px-3">
+    <p class="text-center  mb-5 pb-3 alert alert-warning text-warning ">Are you sure you want to delete {{obj}}?</p>
+    <form method="post" action="" class="house-form row row-cols-sm-2 row-cols-md-2 row-cols-lg-2">
+        {% csrf_token %}
+        <div class="row d-flex justify-content-evenly">
+            <button class="btn btn-primary col-4"><a  href="{{request.META.HTTP_REFERER}}" class="text-light">Go Back</a></button>
+            <input type="submit" value="Confirm" class="submit-btn btn btn-danger col-4">
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+

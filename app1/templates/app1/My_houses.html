@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container-md">
+
+        <div class="container-fluid ">
+            <div class="title-box align-items-center"><h2 class="title"><i class="fa-sharp fa-solid fa-sliders icon"></i> filters</h2></div>
+            <div class="row justify-content-end">
+                <div class="col-12  col-md-12 col-lg-12">
+                    <div class="filters pb-2 pt-2 mb-2">
+                        <a href="{% url 'reservations'%}"class="btn">All</a>
+                        <button  class="btn" id="country-btn">Country</button>
+                        <button  class="btn" id="city-btn">City</button>
+                        <button  class="btn" id="owner-btn">Owner</button>
+                    </div>
+                </div>
+                <ul class="list country-list  justify-content-start align-items-center  " id="country-list">
+                    {% for country in distinct_country %}
+                    <li class="list-item country-item col-1 d-flex justify-content-center"><a href="{% url 'home'%}?q={{country}}">{{country}}</a></li>
+                    {% endfor %}
+                </ul>
+                <ul class="list city-list  justify-content-start align-items-center  " id="city-list">
+                    {% for city in distinct_city %}
+                    <li class="list-item city-item col-1 d-flex justify-content-center "><a href="{% url 'home'%}?q={{city}}">{{city}}</a></li>
+                    {% endfor %}
+                </ul>
+                <form method="get" action="" class="form pb-3" id="owner-form">
+                    {% csrf_token %}
+                    <input type="text" name="w" id="owner-filter" placeholder="Search for an owner" class="col-12   col-sm-5 col-md-5 col-lg-3">
+                </form>
+            </div>
+        </div>
+    
+        <hr class="text-light border border-1 mt-0">
+
+        <div class="houses container-fluid pt-0 pb-5">
+            <div class="row  g-3 ">
+            {% for house in myHouses %}
+            <div class="house col-12 col-sm-5 col-md-4 col-lg-3 p-0 mx-sm-2" >
+                <div class="image-box">
+                    <div class="house-modif d-flex justify-content-end pt-2" >
+                        {% if request.user.is_authenticated and request.user.role == 'Owner' and house.owner == request.user %}
+                        <a href="{% url 'update-house' house.id %}" class="btn"><i class="fa-solid fa-pen"></i></a>
+                        <a href="{% url 'delete-house' house.id %}" class="btn"><i class="fa-solid fa-trash"></i></a>
+                        {% endif %}
+                    </div>
+                    <img src="{% static 'images/pexels-valeriia-miller-2587054.jpg' %}" alt="imgdfj" class="house-image" >
+                    <div class="description px-3 py-3 ">
+                        <h2>{{house.name}} </h2>
+                        <span>@ {{house.owner}} - {{house.created|timesince}} ago</span>
+                        <div class="location-info d-flex flex-column">
+                            <span class="cc">{{house.country}} - {{house.city}} </span>
+                            <span class="address d-flex justify-content-between align-items-center">{{house.address}}  <span class="house-price">{{house.price}} <span>$</span></span></span>
+                        </div>
+                        <p class="pb-3">{{house.description}}</p>
+                        {% if request.user.is_authenticated and request.user.role == 'Client' %}
+                        <a href="{% url 'create-reservation' %}" class="text-success reserv-btn ">Reserve Now</a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        
+</div>
+
+{% endblock content %}
