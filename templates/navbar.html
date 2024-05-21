@@ -1,0 +1,37 @@
+
+<div class="container-md position-sticky sticky-top pb-3 pt-4 " style="background-color:rgba(5, 25, 35, .95);">
+    <div class="row d-sm-flex justify-content-between align-items-center">
+        <div  class="logo col-12 col-sm-4 col-md-3 col-lg-3 pb-3 " data-aos="fade-left">
+            <a href="{% url 'home' %}">stay<span class="primary">Cation .</span></a>
+        </div>
+        <div class="search-bar col-12 col-sm-3 col-md-5 col-lg-5 pb-3">
+            <form method="get" action="">
+                <input type="text" name="q" placeholder="type here to search...">
+            </form>
+        </div>
+        <div class="menu d-flex justify-content-center align-items-baseline col-12 col-sm-5 col-md-4 col-lg-4">
+            {% if request.user.is_authenticated %}
+                {% if request.user.role == 'Owner'%}
+                <a href="{% url 'My-houses'%}">My Houses<i class="fa-solid fa-house"></i></a>
+                {% else %}
+                <a href="{%url 'reservations'%}">My Reservations<i class="fa-sharp fa-solid fa-ticket"></i></a>
+                {% endif %}
+            <a href="{% url 'logout' %}">Logout<i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            {% else %}
+            <a href="{% url 'login' %}">Login<i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <a href="" class="profile">
+                <i class="fa-solid fa-user"></i>
+                <div class="profile-info p-3">
+                    <h2 class="pb-2">User info</h2>
+                    <p><span>Username:</span> {{request.user.username}}</p>
+                    <p><span>Status:</span>{{request.user.role}}</p>
+                </div>
+            </a>
+            {%endif%}
+        </div>
+        
+    </div>
+</div>
